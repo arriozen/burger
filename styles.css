@@ -1,0 +1,664 @@
+body {
+  background: #fff3e0;
+  font-family: 'Comic Sans MS', cursive;
+  text-align: center;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+  min-height: 100vh;
+  transition: background 0.5s;
+}
+
+body.singularity {
+  background: url('https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_1280.jpg') no-repeat center/cover;
+  color: #fff;
+}
+
+body.singularity .tab, body.singularity .evaluate-btn, body.singularity #music-toggle, body.singularity #reset-btn {
+  background: #ff00ff;
+  color: #00ffcc;
+  border: 2px solid #00ffcc;
+  box-shadow: 0 0 10px #00ffcc;
+}
+
+body.singularity .tab:hover, body.singularity .evaluate-btn:hover, body.singularity #music-toggle:hover, body.singularity #reset-btn:hover {
+  background: #00ffcc;
+  color: #ff00ff;
+}
+
+body.singularity .tab.active {
+  background: #00ffcc;
+  color: #ff00ff;
+}
+
+body.singularity .money, body.singularity .exp, body.singularity .result {
+  color: #00ffcc;
+  text-shadow: 0 0 5px #ff00ff;
+}
+
+h1 {
+  font-size: 2em;
+  color: #ff6f61;
+  text-shadow: 2px 2px #ffd700;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+body.singularity h1, body.singularity h2 {
+  color: #00ffcc;
+  text-shadow: 0 0 10px #ff00ff;
+}
+
+h2 {
+  font-size: 1.5em;
+  color: #ff6f61;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  font-size: 1.2em;
+  color: #28a745;
+  margin: 10px 0;
+  flex-wrap: wrap;
+}
+
+.exp-bar {
+  width: 150px;
+  height: 8px;
+  background: #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+#exp-progress {
+  height: 100%;
+  background: #28a745;
+  width: 0;
+  transition: width 0.3s;
+}
+
+body.singularity .exp-bar {
+  background: #333;
+}
+
+body.singularity #exp-progress {
+  background: #00ffcc;
+}
+
+#music-toggle {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #ffd700;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Comic Sans MS', cursive;
+  font-size: 0.9em;
+}
+
+#music-toggle:hover {
+  background: #ffca28;
+}
+
+#reset-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: 'Comic Sans MS', cursive;
+  font-size: 1em;
+  cursor: pointer;
+  margin-top: 15px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#reset-btn:hover {
+  background: #c82333;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  padding: 8px 15px;
+  background: #ffd700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  font-size: 0.9em;
+}
+
+.tab:hover {
+  background: #ffca28;
+  transform: scale(1.05);
+}
+
+.tab.active {
+  background: #ff6f61;
+  color: white;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+#clicker-burger {
+  width: 180px;
+  height: 180px;
+  cursor: pointer;
+  transition: transform 0.1s;
+  object-fit: contain;
+  position: relative;
+}
+
+#clicker-burger:active {
+  transform: scale(0.9);
+}
+
+#clicker-burger.golden {
+  filter: hue-rotate(40deg) brightness(2) saturate(2);
+  animation: sparkle 0.5s infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.spark {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #ffd700;
+  border-radius: 50%;
+  animation: spark-fly 0.5s ease-out forwards;
+}
+
+@keyframes spark-fly {
+  0% { transform: translate(0, 0); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)); opacity: 0; }
+}
+
+#coin-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.coin {
+  position: absolute;
+  font-size: 25px;
+  color: #28a745;
+  animation: coin-fly 2s ease-out forwards;
+}
+
+@keyframes coin-fly {
+  0% { transform: translate(0, 0); opacity: 1; }
+  50% { transform: translate(var(--dx), calc(var(--dy) - 50px)); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)); opacity: 0; }
+}
+
+body.singularity .coin {
+  color: #00ffcc;
+  text-shadow: 0 0 5px #ff00ff;
+}
+
+.shop {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.shop-item {
+  background: #f0f0f0;
+  border: 2px solid #ffd700;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 180px;
+}
+
+body.singularity .shop-item {
+  background: #333;
+  border-color: #00ffcc;
+}
+
+.shop-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.shop-item p {
+  margin: 5px 0;
+  font-size: 0.9em;
+}
+
+.shop-item button {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-size: 0.8em;
+}
+
+.shop-item button:hover {
+  background: #218838;
+}
+
+.shop-item button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+body.singularity .shop-item button {
+  background: #ff00ff;
+  color: #00ffcc;
+}
+
+body.singularity .shop-item button:hover {
+  background: #00ffcc;
+  color: #ff00ff;
+}
+
+.upgrades {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.upgrade-item {
+  background: #f0f0f0;
+  border: 2px solid #ffd700;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 180px;
+  text-align: center;
+}
+
+body.singularity .upgrade-item {
+  background: #333;
+  border-color: #00ffcc;
+  color: #00ffcc;
+}
+
+.upgrade-item p {
+  margin: 0;
+  font-size: 0.9em;
+}
+
+.upgrade-item button {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-size: 0.8em;
+}
+
+.upgrade-item button:hover {
+  background: #218838;
+}
+
+.upgrade-item button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+body.singularity .upgrade-item button {
+  background: #ff00ff;
+  color: #00ffcc;
+}
+
+body.singularity .upgrade-item button:hover {
+  background: #00ffcc;
+  color: #ff00ff;
+}
+
+.plate {
+  width: 300px;
+  height: 400px;
+  margin: 15px auto;
+  position: relative;
+  border: 5px solid #ffd700;
+  border-radius: 15px;
+  overflow: visible;
+  background-color: transparent;
+}
+
+body.singularity .plate {
+  border-color: #00ffcc;
+}
+
+.ingredients {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.inventory-item {
+  position: relative;
+  display: inline-block;
+}
+
+.ingredient {
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  transition: transform 0.3s;
+  object-fit: contain;
+  background: transparent;
+}
+
+.ingredient:hover {
+  transform: scale(1.2);
+}
+
+.ingredient-count {
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  background: #ff6f61;
+  color: white;
+  padding: 2px 5px;
+  border-radius: 8px;
+  font-size: 0.7em;
+}
+
+body.singularity .ingredient-count {
+  background: #ff00ff;
+}
+
+.stacked {
+  width: 150px;
+  height: 60px;
+  position: absolute;
+  transition: bottom 0.3s ease, left 0.3s ease, transform 0.3s ease;
+  object-fit: contain;
+  background: transparent;
+  transform: translateX(-50%) rotateX(25deg);
+}
+
+.result {
+  font-size: 1.2em;
+  color: #28a745;
+  margin-top: 15px;
+}
+
+.evaluate-btn {
+  background: #ff6f61;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: 'Comic Sans MS', cursive;
+  font-size: 1em;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s, background 0.3s;
+}
+
+.evaluate-btn:hover {
+  background: #e65b50;
+  transform: scale(1.1);
+}
+
+.evaluate-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.spinner {
+  display: block;
+  width: 30px;
+  height: 30px;
+  border: 4px solid #ff6f61;
+  border-top: 4px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 10px auto;
+}
+
+body.singularity .spinner {
+  border-color: #00ffcc;
+  border-top-color: transparent;
+}
+
+.spinner-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+.ingredient-spinner {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translate(calc(var(--radius) * cos(var(--angle))), calc(var(--radius) * sin(var(--angle))));
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.reviews {
+  text-align: left;
+  max-width: 90%;
+  margin: 15px auto;
+}
+
+.review {
+  background: #f0f0f0;
+  padding: 8px;
+  margin: 8px 0;
+  border-radius: 5px;
+  font-size: 0.9em;
+}
+
+body.singularity .review {
+  background: #333;
+  color: #00ffcc;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 90%;
+  width: 350px;
+}
+
+body.singularity .modal-content {
+  background: #333;
+  color: #00ffcc;
+  border: 2px solid #ff00ff;
+}
+
+.modal-content button {
+  background: #ff6f61;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+body.singularity .modal-content button {
+  background: #ff00ff;
+  color: #00ffcc;
+}
+
+body.singularity .modal-content button:hover {
+  background: #00ffcc;
+  color: #ff00ff;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.5em;
+  }
+
+  h2 {
+    font-size: 1.2em;
+  }
+
+  .stats {
+    font-size: 1em;
+    gap: 10px;
+    flex-direction: column;
+  }
+
+  .exp-bar {
+    width: 120px;
+  }
+
+  .shop {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .upgrades {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .shop-item, .upgrade-item {
+    height: 150px;
+  }
+
+  .shop-item img, .ingredient {
+    width: 50px;
+    height: 50px;
+  }
+
+  .shop-item p, .upgrade-item p {
+    font-size: 0.8em;
+  }
+
+  .shop-item button, .upgrade-item button {
+    padding: 4px 8px;
+    font-size: 0.7em;
+  }
+
+  #music-toggle {
+    top: 10px;
+    right: 10px;
+    padding: 4px 8px;
+    font-size: 0.8em;
+  }
+
+  .tabs {
+    gap: 5px;
+  }
+
+  .tab {
+    padding: 6px 12px;
+    font-size: 0.8em;
+  }
+
+  #clicker-burger {
+    width: 120px;
+    height: 120px;
+  }
+
+  .plate {
+    width: 200px;
+    height: 300px;
+  }
+
+  .stacked {
+    width: 100px;
+    height: 40px;
+  }
+
+  .evaluate-btn, .modal-content button, #reset-btn {
+    padding: 6px 12px;
+    font-size: 0.9em;
+  }
+
+  .spinner {
+    width: 25px;
+    height: 25px;
+    border-width: 3px;
+  }
+
+  .spinner-container {
+    width: 100px;
+    height: 100px;
+  }
+
+  .ingredient-spinner {
+    width: 30px;
+    height: 30px;
+  }
+
+  .review {
+    font-size: 0.8em;
+  }
+}

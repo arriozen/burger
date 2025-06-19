@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Собери Идеальный Бургер! <span id="easter-egg">🥪</span></title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Собери Идеальный Бургер! <span id="easter-egg">🥪</span></h1>
+  <div class="stats">
+    <div class="money">Монеты: <span id="money">0</span></div>
+    <div class="exp">EXP: <span id="exp">0/100</span></div>
+    <div class="exp-bar"><div id="exp-progress"></div></div>
+  </div>
+  <button id="music-toggle">🔇 Музыка: Выкл</button>
+  <div class="tabs">
+    <div class="tab active" data-tab="clicker">Кликер</div>
+    <div class="tab" data-tab="shop">Магазин</div>
+    <div class="tab" data-tab="burger">Бургер</div>
+    <div class="tab" data-tab="reviews">Отзывы</div>
+    <div class="tab" data-tab="upgrades">Улучшения</div>
+  </div>
+
+  <div id="clicker" class="tab-content active">
+    <h2>Кликай, чтобы заработать монеты!</h2>
+    <img src="Burger/burger.png" id="clicker-burger" alt="Бургер">
+    <div id="coin-container"></div>
+    <p>Кликай на бургер, чтобы заработать!</p>
+    <audio id="click-sound" src="sounds/click.mp3"></audio>
+    <audio id="bg-music" src="sounds/bg-music.mp3" loop></audio>
+    <audio id="hewing-sound" src="sounds/hewing.mp3"></audio>
+  </div>
+
+  <div id="shop" class="tab-content">
+    <h2>Магазин ингредиентов</h2>
+    <div class="shop" id="shop"></div>
+  </div>
+
+  <div id="burger" class="tab-content">
+    <h2>Собери свой бургер!</h2>
+    <div class="plate" id="plate"></div>
+    <div class="ingredients" id="inventory"></div>
+    <button class="evaluate-btn" onclick="evaluateBurger()">Оценить бургер</button>
+    <div class="result" id="result">Собери свой шедевр!</div>
+  </div>
+
+  <div id="reviews" class="tab-content">
+    <h2>Отзывы о твоих бургерах</h2>
+    <div id="reviews-list"></div>
+  </div>
+
+  <div id="upgrades" class="tab-content">
+    <h2>Улучшения</h2>
+    <div class="upgrades" id="upgrades"></div>
+  </div>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <h2 id="modal-title"></h2>
+      <p id="modal-review"></p>
+      <p id="modal-rewards"></p>
+      <button onclick="closeModal()">Закрыть</button>
+    </div>
+  </div>
+
+  <button id="reset-btn" onclick="resetGame()">Сбросить игру</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
